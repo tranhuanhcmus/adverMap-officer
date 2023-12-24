@@ -1,4 +1,4 @@
-import {createBrowserRouter, Outlet, redirect, RouterProvider} from "react-router-dom";
+import {BrowserRouter, createBrowserRouter, Outlet, redirect, Router, RouterProvider, Routes} from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import React, {useState} from "react";
 import Login from "./components/login/login.tsx";
@@ -8,11 +8,6 @@ import {PAGE} from "./components/constants.tsx";
 function App() {
   const { token, setToken } = useToken();
 
-  if(!token) {
-//    redirect("/login")
-    return <Login setToken={setToken} />
-  }
-
   const Layout = () => {
     return (
       <div className="h-screen w-screen bg-white">
@@ -20,10 +15,6 @@ function App() {
       </div>
     );
   };
-
-
-
-
 
   //Setting Router
   const route = createBrowserRouter([
@@ -40,7 +31,10 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={route} />;
+  return (
+      <RouterProvider router={route} />
+  )
+
 }
 
 export default App;

@@ -22,7 +22,6 @@ const Login = ({setToken} ) => {
 
     const [fields, setFields] = useState(initialFields)
     const [message,setMessage]=useState<string>("")
-    const [loginSuccess, setStatus] = useState(false)
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault(); // Prevent default form submission behavior
 
@@ -33,8 +32,7 @@ const Login = ({setToken} ) => {
                 setMessage("Login success ")
                 console.log("Token:" + res.data)
                 setToken(res.data)
-                navigate(PAGE.HOME)
-                setStatus(true)
+                navigate("/Home", {replace: true})
             } else {
                 setMessage("Error" + res.message)
 
@@ -60,7 +58,7 @@ const Login = ({setToken} ) => {
         });
     };
 
-    return (
+    return  (
         <Box component="form" id="AuthForm" onSubmit={handleSubmit}>
             <div className="container">
                 <TextField
@@ -87,8 +85,6 @@ const Login = ({setToken} ) => {
                 </Button>
             </div>
         </Box>
-
-
 
     );
 
