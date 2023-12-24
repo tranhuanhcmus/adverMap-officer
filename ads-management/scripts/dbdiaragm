@@ -1,0 +1,171 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+
+
+ table users {
+                       id serial [primary key]
+                       email varchar(255) [note: 'Content of the post']
+                       phone varchar(15)
+                       birthday timestamptz
+                       role varchar(50)
+                       name varchar(255)
+                       password varchar(260)
+                       created_at timestamptz
+                       updated_at timestamptz
+}
+
+ table cities {
+                        id serial [primary key]
+                        name varchar(255)
+                        created_at timestamptz
+                        updated_at timestamptz
+}
+
+
+ table districts {
+                           id serial [primary key]
+                           city_id int
+                           name varchar(255)
+                           created_at timestamptz
+                           updated_at timestamptz
+
+}
+
+Ref: districts.city_id > cities.id // many-to-one
+
+
+ table wards {
+                       id serial [primary key]
+                       district_id int
+                       name varchar(255)
+                       created_at timestamptz
+                       updated_at timestamptz
+}
+Ref: wards.district_id > districts.id // many-to-one
+
+TableGroup location {
+  wards
+  districts
+  cities
+}
+
+ table spaces {
+                        id serial [primary key]
+                        address varchar(255)
+                        long float
+                        lat float
+                        type varchar(255)
+                        format varchar(255)
+                        img_url varchar(255)
+                        is_planned bool
+                        ward_id int
+                        created_at timestamptz
+                        updated_at timestamptz
+}
+Ref: spaces.ward_id > wards.id // many-to-one
+
+
+ table surfaces {
+                          id serial [primary key]
+                          format varchar(255)
+                          width int
+                          height int
+                          img_url varchar(500)
+                          content text
+                          space_id int
+                          created_at timestamptz
+                          updated_at timestamptz
+                              FOREIGN KEY(space_id)
+                                  REFERENCES spaces(id)
+}
+
+ table reports {
+                         id serial [primary key]
+                         surface_id int
+                         address varchar(255)
+                         ward_id int
+                         long float
+                         lat float
+                         report_date timestamptz
+                         content text
+                         email varchar(255)
+                         phone varchar(15)
+                         state int
+                         img_url varchar(255)
+                         approved_id int
+                         response text
+                         created_at timestamptz
+                         updated_at timestamptz
+}
+Ref: reports.surface_id > surfaces.id // many-to-one
+Ref: reports.ward_id > wards.id // many-to-one
+Ref: reports.approved_id > users.id // many-to-one
+
+
+ table surface_requests {
+                                  id serial [primary key]
+                                  report_date timestamptz
+                                  user_id int
+                                  surface_id int
+                                  des_space_id int
+                                  content text
+                                  approved_id int
+                                  state int
+                                  response text
+                                  created_at timestamptz
+                                  updated_at timestamptz
+}
+Ref: surface_requests.surface_id > surfaces.id // many-to-one
+Ref: surface_requests.des_space_id > spaces.id // many-to-one
+Ref: surface_requests.user_id > users.id // many-to-one
+Ref: surface_requests.approved_id > users.id // many-to-one
+
+ table space_requests {
+                                id serial [primary key]
+                                report_date timestamptz
+                                user_id int
+                                lat float
+                                long float
+                                space_id int
+                                ward_id int
+                                content text
+                                approved_id int
+                                state int
+                                response text
+                                created_at timestamptz
+                                updated_at timestamptz
+}
+Ref: space_requests.space_id > spaces.id // many-to-one
+Ref: space_requests.ward_id > wards.id // many-to-one
+Ref: space_requests.user_id > users.id // many-to-one
+Ref: space_requests.approved_id > users.id // many-to-one
+
+ table surface_licenses {
+                                  id serial [primary key]
+                                  request_date timestamptz
+                                  user_id int
+                                  format varchar(255)
+                                  ward_id int
+                                  width int
+                                  height int
+                                  img_url varchar(500)
+                                  space_id int
+                                  content text
+                                  company_email varchar(255)
+                                  company_phone varchar(15)
+                                  company_address varchar(255)
+                                  start_date timestamptz
+                                  end_date timestamptz
+                                  state int
+                                  response text
+                                  approved_id int
+                                  response_date timestamptz
+                                  created_at timestamptz
+                                  updated_at timestamptz
+}
+Ref: surface_licenses.space_id > spaces.id // many-to-one
+Ref: surface_licenses.ward_id > wards.id // many-to-one
+Ref: surface_licenses.user_id > users.id // many-to-one
+Ref: surface_licenses.approved_id > users.id // many-to-one
+
