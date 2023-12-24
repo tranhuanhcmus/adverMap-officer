@@ -1,3 +1,4 @@
-export const API={
-	AUTH:"/api/v1/auth/login"
+export const PAGE={
+	HOME:"/Home",
+	LOGIN:"/login",
 }
