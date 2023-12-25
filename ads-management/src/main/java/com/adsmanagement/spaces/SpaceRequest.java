@@ -1,7 +1,9 @@
 package com.adsmanagement.spaces;
 
 import com.adsmanagement.users.User;
+import com.adsmanagement.users.UserDTO;
 import com.adsmanagement.wards.Ward;
+import com.adsmanagement.wards.WardDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -76,6 +78,26 @@ public class SpaceRequest {
     private Date updatedAt;
 
     SpaceRequestDto ToDto(){
-        return new SpaceRequestDto(id,address,reportDate,user,longitude,lat,space,ward,content,type,format,approvedBy,state,response);
+        UserDTO userDto = null;
+        if (user != null) {
+            userDto = user.toDTO();
+        }
+
+        UserDTO approvedByDto = null;
+        if (approvedBy != null) {
+            approvedByDto = approvedBy.toDTO();
+        }
+
+        SpaceDto spaceDto = null;
+        if (space != null){
+            spaceDto = space.ToDto();
+        }
+
+        WardDTO wardDto = null;
+        if (ward != null){
+            wardDto = ward.toDto();
+        }
+
+        return new SpaceRequestDto(id,address,reportDate,userDto,longitude,lat,spaceDto,wardDto,content,type,format,approvedByDto,state,response);
     }
 }

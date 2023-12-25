@@ -45,7 +45,7 @@ public class User {
     public User(Integer id){
         this.id = id;
     }
-    UserDTO toDTO() {
+    public UserDTO toDTO() {
         return new UserDTO(id,name,role, email,phone,birthday);
     }
 }

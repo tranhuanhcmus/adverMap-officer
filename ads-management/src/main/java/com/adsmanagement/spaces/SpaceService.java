@@ -82,4 +82,45 @@ public class SpaceService {
 
     }
 
+    public Page<SpaceRequest> findAllRequest(Integer page, Integer size, Integer cityId, List<Integer> wardIds, List<Integer> districtIds) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+
+        if (wardIds == null || wardIds.isEmpty()) {
+            // filter by cityId
+            if (districtIds == null || districtIds.isEmpty()) {
+                Page<District> districtRes = this.districtRepository.findAllByCity_Id(cityId,pageable);
+
+                List<District> districts  = districtRes.getContent();
+                if (districts != null && !districts.isEmpty()) {
+                    districtIds = new ArrayList<>();
+                    for (int i = 0; i < districts.size(); i++ ){
+                        districtIds.add(districts.get(i).getId());
+                    }
+                }
+            }
+
+            // filter by districtId
+            if (districtIds != null && !districtIds.isEmpty()) {
+                Page<Ward> res = this.wardRepository.findAllByDistrict_IdIn(districtIds,pageable);
+
+                List<Ward> wards  = res.getContent();
+                if (wards != null && !wards.isEmpty()) {
+                    wardIds = new ArrayList<>();
+                    for (int i = 0; i < wards.size(); i++ ){
+                        wardIds.add(wards.get(i).getId());
+                    }
+                }
+            }
+        }
+
+        Page<SpaceRequest> data;
+        if (wardIds != null && !wardIds.isEmpty()) {
+            data = this.spaceRequestRepository.findAllByWardIdIn(wardIds,pageable);
+        } else {
+            data = this.spaceRequestRepository.findAll(pageable);
+        }
+
+        return data;
+    }
+
 }

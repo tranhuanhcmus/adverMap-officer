@@ -2,6 +2,7 @@ package com.adsmanagement.auth;
 
 import com.adsmanagement.jwt.JwtService;
 import com.adsmanagement.common.Response;
+import com.adsmanagement.users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +23,21 @@ public class AuthController {
     private JwtService jwtService;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
     @PostMapping("/login")
     public ResponseEntity<Response<String>> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
         //return jwtService.generateToken(authRequest.getUsername());
+        var user = this.userRepository.findByEmail(authRequest.getUsername());
+        if (user.isEmpty()){
+            return new ResponseEntity<>(new Response<>("invalid user request !",null), HttpStatus.BAD_REQUEST);
+        }
+
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         if (authentication.isAuthenticated()) {
-            var token = jwtService.generateToken(authRequest.getUsername());
+            var token = jwtService.generateToken(user.get());
             return new ResponseEntity<>(new Response<>("", token), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(new Response<>("invalid user request !",null), HttpStatus.BAD_REQUEST);

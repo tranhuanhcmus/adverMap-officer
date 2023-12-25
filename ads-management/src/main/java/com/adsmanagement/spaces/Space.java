@@ -1,6 +1,7 @@
 package com.adsmanagement.spaces;
 
 import com.adsmanagement.wards.Ward;
+import com.adsmanagement.wards.WardDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -79,6 +80,12 @@ public class Space {
             String[] split = this.imgUrl.split(", ");
             imgUrls = Arrays.stream(split).toList();
         }
-        return new SpaceDto(id,address,longitude,lat,type,format,imgUrls,isPlanned,ward);
+
+        WardDTO wardDto = null;
+        if (ward != null){
+            wardDto = ward.toDto();
+        }
+
+        return new SpaceDto(id,address,longitude,lat,type,format,imgUrls,isPlanned,wardDto);
     }
 }
