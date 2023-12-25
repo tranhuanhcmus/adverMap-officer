@@ -3,10 +3,18 @@ package com.adsmanagement.districts;
 import com.adsmanagement.cities.City;
 import com.adsmanagement.wards.Ward;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "districts")
 public class District {
     @Id
@@ -24,36 +32,7 @@ public class District {
     @JoinColumn(name="city_id")
     private City city;
 
-    public District(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public District() {
-
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public DistrictDTO toDto(){
+        return new DistrictDTO(id,name);
     }
 }

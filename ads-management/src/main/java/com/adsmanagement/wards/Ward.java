@@ -27,4 +27,8 @@ public class Ward {
    public Ward(Integer id){
        this.id = id;
    }
+
+   public WardDTO toDto(){
+       return new WardDTO(id,name);
+   }
 }

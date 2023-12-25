@@ -1,5 +1,6 @@
 package com.adsmanagement.jwt;
 
+import com.adsmanagement.users.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -50,9 +51,10 @@ public class JwtService {
     }
 
 
-    public String generateToken(String userName){
+    public String generateToken(User user){
         Map<String,Object> claims=new HashMap<>();
-        return createToken(claims,userName);
+        claims.put("role",user.getRole());
+        return createToken(claims,user.getEmail());
     }
 
     private String createToken(Map<String, Object> claims, String userName) {

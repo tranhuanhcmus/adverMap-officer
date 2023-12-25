@@ -66,4 +66,26 @@ public class SpaceController {
         var res = new Response<>("",data.ToDto());
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
+
+    @GetMapping(path = "/request")
+    public ResponseEntity<Response<Page<SpaceRequestDto>>> listRequest(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "20") Integer size,
+            @RequestParam(required = false) Integer cityId,
+            @RequestParam(required = false) List<Integer> wardIds,
+            @RequestParam(required = false) List<Integer> districtIds,
+            @AuthenticationPrincipal UserInfoUserDetails userDetails
+    )   {
+        var user = userDetails.getUser();
+        var data = this.spaceService.findAllRequest(page, size, cityId, wardIds, districtIds);
+
+        var contents = new ArrayList<SpaceRequestDto>();
+        for (int i = 0; i < data.getContent().size(); i++){
+            contents.add(data.getContent().get(i).ToDto());
+        }
+
+        Page<SpaceRequestDto> dataRes = new PageImpl<>(contents,data.getPageable(),data.getTotalElements());
+        var res = new Response<>("",dataRes);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 }

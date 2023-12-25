@@ -1,6 +1,7 @@
 package com.adsmanagement.spaces;
 
 import com.adsmanagement.wards.Ward;
+import com.adsmanagement.wards.WardDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,5 +24,5 @@ public class SpaceDto {
     private SpaceFormat format;
     private List<String> imgUrl;
     private boolean isPlanned;
-    private Ward ward;
+    private WardDTO ward;
 }

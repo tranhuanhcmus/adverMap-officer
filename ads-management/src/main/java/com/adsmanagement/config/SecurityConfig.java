@@ -47,14 +47,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->{
                     auth
-                            .requestMatchers("/api/v1/**","/uploads/*").permitAll()
-                            .requestMatchers("/api/v1/auth/*","/api/v1/auth/login").permitAll()
+                            .requestMatchers("/api/v1/auth/**","/uploads/*").permitAll()
                             .requestMatchers("/api/v1/spaces/**","/api/v1/spaces").authenticated();
                 })
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-                .oauth2Login(Customizer.withDefaults())
+                //.oauth2Login(Customizer.withDefaults())
                 .build();
     }
 

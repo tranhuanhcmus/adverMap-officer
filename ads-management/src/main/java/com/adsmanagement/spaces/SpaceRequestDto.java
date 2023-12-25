@@ -1,7 +1,9 @@
 package com.adsmanagement.spaces;
 
 import com.adsmanagement.users.User;
+import com.adsmanagement.users.UserDTO;
 import com.adsmanagement.wards.Ward;
+import com.adsmanagement.wards.WardDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,15 +18,15 @@ public class SpaceRequestDto {
     private Integer id;
     private String address;
     private Date reportDate;
-    private User user;
+    private UserDTO user;
     private Float longitude;
     private Float lat;
-    private Space space;
-    private Ward ward;
+    private SpaceDto space;
+    private WardDTO ward;
     private String content;
     private SpaceType type;
     private SpaceFormat format;
-    private User approvedBy;
+    private UserDTO approvedBy;
     private RequestState state;
     private String response;
 }
