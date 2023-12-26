@@ -1,6 +1,6 @@
 package com.adsmanagement.users;
 
-import com.adsmanagement.districts.District;
+import com.adsmanagement.users.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.*;
 

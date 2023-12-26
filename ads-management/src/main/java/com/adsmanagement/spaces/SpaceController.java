@@ -3,6 +3,10 @@ package com.adsmanagement.spaces;
 
 import com.adsmanagement.common.Response;
 import com.adsmanagement.config.UserInfoUserDetails;
+import com.adsmanagement.spaces.dto.CreateSpaceDto;
+import com.adsmanagement.spaces.dto.CreateSpaceRequestDto;
+import com.adsmanagement.spaces.dto.SpaceDto;
+import com.adsmanagement.spaces.dto.SpaceRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
@@ -10,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 

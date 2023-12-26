@@ -1,4 +1,4 @@
-package com.adsmanagement.filter;
+package com.adsmanagement.jwt;
 
 import com.adsmanagement.config.UserInfoUserDetailsService;
 import com.adsmanagement.jwt.JwtService;

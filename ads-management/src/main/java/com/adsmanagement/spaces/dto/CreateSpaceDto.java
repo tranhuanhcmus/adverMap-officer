@@ -1,5 +1,8 @@
-package com.adsmanagement.spaces;
+package com.adsmanagement.spaces.dto;
 
+import com.adsmanagement.spaces.models.Space;
+import com.adsmanagement.spaces.models.SpaceFormat;
+import com.adsmanagement.spaces.models.SpaceType;
 import com.adsmanagement.wards.Ward;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

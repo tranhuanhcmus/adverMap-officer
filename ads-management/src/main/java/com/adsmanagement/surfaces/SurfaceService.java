@@ -1,0 +1,126 @@
+package com.adsmanagement.surfaces;
+
+import com.adsmanagement.districts.District;
+import com.adsmanagement.districts.DistrictRepository;
+import com.adsmanagement.spaces.*;
+import com.adsmanagement.spaces.models.Space;
+import com.adsmanagement.surfaces.dto.CreateSurfaceDto;
+import com.adsmanagement.surfaces.dto.CreateSurfaceRequestDto;
+import com.adsmanagement.surfaces.models.Surface;
+import com.adsmanagement.surfaces.models.SurfaceRequest;
+import com.adsmanagement.users.User;
+import com.adsmanagement.wards.Ward;
+import com.adsmanagement.wards.WardRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class SurfaceService {
+    private final SurfaceRepository surfaceRepository;
+
+    private final  SurfaceRequestRepository surfaceRequestRepository;
+    private final SpaceRepository spaceRepository;
+
+    private final DistrictRepository districtRepository;
+
+    private final WardRepository wardRepository;
+
+    @Autowired
+    public SurfaceService(
+            SurfaceRepository surfaceRepository,
+            DistrictRepository districtRepository,
+            WardRepository wardRepository,
+            SpaceRepository spaceRepository,
+            SurfaceRequestRepository surfaceRequestRepository
+    ) {
+        this.surfaceRepository = surfaceRepository;
+        this.districtRepository = districtRepository;
+        this.wardRepository = wardRepository;
+        this.spaceRepository = spaceRepository;
+        this.surfaceRequestRepository = surfaceRequestRepository;
+    }
+
+    public Page<Surface> findAll(Integer page, Integer size, Integer cityId, List<Integer> wardIds, List<Integer> districtIds, List<Integer> spaceIds) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+
+        if (wardIds == null || wardIds.isEmpty()) {
+            // filter by cityId
+            if (districtIds == null || districtIds.isEmpty()) {
+                Page<District> districtRes = this.districtRepository.findAllByCity_Id(cityId,pageable);
+
+                List<District> districts  = districtRes.getContent();
+                if (districts != null && !districts.isEmpty()) {
+                    districtIds = new ArrayList<>();
+                    for (int i = 0; i < districts.size(); i++ ){
+                        districtIds.add(districts.get(i).getId());
+                    }
+                }
+            }
+
+            // filter by districtId
+            if (districtIds != null && !districtIds.isEmpty()) {
+                Page<Ward> res = this.wardRepository.findAllByDistrict_IdIn(districtIds,pageable);
+
+                List<Ward> wards  = res.getContent();
+                if (wards != null && !wards.isEmpty()) {
+                    wardIds = new ArrayList<>();
+                    for (int i = 0; i < wards.size(); i++ ){
+                        wardIds.add(wards.get(i).getId());
+                    }
+                }
+            }
+        }
+
+
+        List<Integer> spaceIdArr = new ArrayList<>();
+        if (wardIds != null && !wardIds.isEmpty()) {
+            List<Space> spaces = null;
+            if (spaceIds != null && spaceIds.size() > 0) {
+                spaces = this.spaceRepository.findAllByWardIdInAndIdIn(wardIds, spaceIds);
+            } else{
+                spaces = this.spaceRepository.findAllByWardIdIn(wardIds);
+            }
+
+            if (spaces != null && spaces.size() > 0 ) {
+                for (var i = 0; i < spaces.size(); i++){
+                    spaceIdArr.add(spaces.get(i).getId());
+                }
+            }
+        } else {
+            spaceIdArr =spaceIds;
+        }
+
+
+        Page<Surface> data;
+        if (spaceIdArr != null && spaceIdArr.size() > 0 ) {
+            data = this.surfaceRepository.findAllBySpaceIdIn(spaceIdArr,pageable);
+        } else {
+            data = this.surfaceRepository.findAll(pageable);
+        }
+
+        return data;
+    }
+
+    public Surface create(CreateSurfaceDto createSurfaceDto) {
+        return this.surfaceRepository.save(createSurfaceDto.toSurface());
+    }
+
+
+    public SurfaceRequest createRequest(CreateSurfaceRequestDto createSurfaceRequestDto, User user){
+
+        return this.surfaceRequestRepository.save(createSurfaceRequestDto.toSurfaceRequest());
+    }
+
+    public Page<SurfaceRequest> findAllRequest(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+
+        return this.surfaceRequestRepository.findAll(pageable);
+    }
+}

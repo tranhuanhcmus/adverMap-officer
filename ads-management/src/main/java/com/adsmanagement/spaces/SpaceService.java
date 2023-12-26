@@ -2,6 +2,10 @@ package com.adsmanagement.spaces;
 
 import com.adsmanagement.districts.District;
 import com.adsmanagement.districts.DistrictRepository;
+import com.adsmanagement.spaces.dto.CreateSpaceDto;
+import com.adsmanagement.spaces.dto.CreateSpaceRequestDto;
+import com.adsmanagement.spaces.models.Space;
+import com.adsmanagement.spaces.models.SpaceRequest;
 import com.adsmanagement.users.User;
 import com.adsmanagement.wards.Ward;
 import com.adsmanagement.wards.WardRepository;

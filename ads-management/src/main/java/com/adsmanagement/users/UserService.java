@@ -1,7 +1,6 @@
 package com.adsmanagement.users;
 
-import com.adsmanagement.wards.Ward;
-import com.adsmanagement.wards.WardRepository;
+import com.adsmanagement.users.dto.CreateUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

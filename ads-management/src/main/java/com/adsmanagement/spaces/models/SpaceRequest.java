@@ -1,19 +1,15 @@
-package com.adsmanagement.spaces;
+package com.adsmanagement.spaces.models;
 
+import com.adsmanagement.spaces.dto.SpaceDto;
+import com.adsmanagement.spaces.dto.SpaceRequestDto;
 import com.adsmanagement.users.User;
-import com.adsmanagement.users.UserDTO;
+import com.adsmanagement.users.dto.UserDTO;
 import com.adsmanagement.wards.Ward;
 import com.adsmanagement.wards.WardDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
-
-enum RequestState {
-    IN_PROGRESS,
-    REJECTED,
-    APPROVED,
-}
 
 @Entity
 @Data
@@ -77,7 +73,7 @@ public class SpaceRequest {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    SpaceRequestDto ToDto(){
+    public SpaceRequestDto ToDto(){
         UserDTO userDto = null;
         if (user != null) {
             userDto = user.toDTO();

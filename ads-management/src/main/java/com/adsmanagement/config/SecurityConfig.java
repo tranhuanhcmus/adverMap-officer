@@ -1,6 +1,6 @@
 package com.adsmanagement.config;
 
-import com.adsmanagement.filter.JwtAuthFilter;
+import com.adsmanagement.jwt.JwtAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth->{
                     auth
                             .requestMatchers("/api/v1/auth/**","/uploads/*").permitAll()
-                            .requestMatchers("/api/v1/spaces/**","/api/v1/spaces").authenticated();
+                            .requestMatchers("/api/v1/**").authenticated();
                 })
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
