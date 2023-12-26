@@ -1,0 +1,30 @@
+package com.adsmanagement.surfaces.dto;
+
+import com.adsmanagement.spaces.dto.SpaceDto;
+import com.adsmanagement.spaces.models.RequestState;
+import com.adsmanagement.spaces.models.Space;
+import com.adsmanagement.surfaces.models.Surface;
+import com.adsmanagement.surfaces.models.SurfaceRequest;
+import com.adsmanagement.users.User;
+import com.adsmanagement.users.dto.UserDTO;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Date;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class CreateSurfaceRequestDto {
+    private Integer userId;
+    private Integer surfaceId;
+    private Integer spaceId;
+    private String content;
+
+    public SurfaceRequest toSurfaceRequest(){
+        return new SurfaceRequest(0,new Date(),new User(userId),new Surface(surfaceId),new Space(spaceId),content,null,RequestState.IN_PROGRESS,null,null,null);
+    }
+}

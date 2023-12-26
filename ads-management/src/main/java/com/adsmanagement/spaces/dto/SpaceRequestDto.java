@@ -1,10 +1,10 @@
-package com.adsmanagement.spaces;
+package com.adsmanagement.spaces.dto;
 
-import com.adsmanagement.users.User;
-import com.adsmanagement.users.UserDTO;
-import com.adsmanagement.wards.Ward;
+import com.adsmanagement.spaces.models.RequestState;
+import com.adsmanagement.spaces.models.SpaceFormat;
+import com.adsmanagement.spaces.models.SpaceType;
+import com.adsmanagement.users.dto.UserDTO;
 import com.adsmanagement.wards.WardDTO;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;

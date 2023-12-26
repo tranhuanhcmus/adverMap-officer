@@ -1,13 +1,13 @@
-package com.adsmanagement.spaces;
+package com.adsmanagement.spaces.dto;
 
-import com.adsmanagement.wards.Ward;
+import com.adsmanagement.spaces.models.SpaceFormat;
+import com.adsmanagement.spaces.models.SpaceType;
 import com.adsmanagement.wards.WardDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.List;
 
 

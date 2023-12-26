@@ -2,6 +2,8 @@ package com.adsmanagement.users;
 
 
 import com.adsmanagement.common.Response;
+import com.adsmanagement.users.dto.CreateUserDTO;
+import com.adsmanagement.users.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping(path = "")
-    public ResponseEntity<Response<UserDTO>> create( @RequestBody() CreateUserDTO createUserDTO) {
+    public ResponseEntity<Response<UserDTO>> create(@RequestBody() CreateUserDTO createUserDTO) {
         var data = this.userService.save(createUserDTO);
         var res = new Response<>("",data.toDTO());
         return new ResponseEntity<>(res, HttpStatus.OK);

@@ -1,5 +1,6 @@
-package com.adsmanagement.spaces;
+package com.adsmanagement.spaces.models;
 
+import com.adsmanagement.spaces.dto.SpaceDto;
 import com.adsmanagement.wards.Ward;
 import com.adsmanagement.wards.WardDTO;
 import jakarta.persistence.*;
@@ -9,23 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
-enum SpaceType {
-    PUBLIC_LAND,
-    PARK,
-    TRAFFIC_CORRIDOR,
-    PRIVATE_LAND,
-    SHOPPING_CENTER,
-    MARKET,
-    GAS_STATION,
-    BUS_SHELTER
-}
-
-enum SpaceFormat {
-    POLITICAL_MOBILIZATION,
-    COMMERCIAL_ADS,
-    SOCIALIZATION
-}
 
 @Entity
 @Data
