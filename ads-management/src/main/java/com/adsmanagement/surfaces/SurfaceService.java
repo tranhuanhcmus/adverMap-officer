@@ -118,9 +118,50 @@ public class SurfaceService {
         return this.surfaceRequestRepository.save(createSurfaceRequestDto.toSurfaceRequest());
     }
 
-    public Page<SurfaceRequest> findAllRequest(Integer page, Integer size) {
+    public Page<SurfaceRequest> findAllRequest(Integer page, Integer size,Integer cityId,List<Integer> districtIds,List<Integer> wardIds,List<Integer> surfaceIds) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
 
-        return this.surfaceRequestRepository.findAll(pageable);
+        if (wardIds == null || wardIds.isEmpty()) {
+            // filter by cityId
+            if (districtIds == null || districtIds.isEmpty()) {
+                Page<District> districtRes = this.districtRepository.findAllByCity_Id(cityId,pageable);
+
+                List<District> districts  = districtRes.getContent();
+                if (districts != null && !districts.isEmpty()) {
+                    districtIds = new ArrayList<>();
+                    for (int i = 0; i < districts.size(); i++ ){
+                        districtIds.add(districts.get(i).getId());
+                    }
+                }
+            }
+
+            // filter by districtId
+            if (districtIds != null && !districtIds.isEmpty()) {
+                Page<Ward> res = this.wardRepository.findAllByDistrict_IdIn(districtIds,pageable);
+
+                List<Ward> wards  = res.getContent();
+                if (wards != null && !wards.isEmpty()) {
+                    wardIds = new ArrayList<>();
+                    for (int i = 0; i < wards.size(); i++ ){
+                        wardIds.add(wards.get(i).getId());
+                    }
+                }
+            }
+        }
+
+        if (wardIds != null && surfaceIds != null && wardIds.size() > 0 && surfaceIds.size() > 0){
+            return this.surfaceRequestRepository.findAllByWardIdsAndSurfaceIds(pageable, wardIds, surfaceIds);
+        }
+
+        if (wardIds != null && wardIds.size() >0) {
+            return this.surfaceRequestRepository.findAllByWardIds(pageable, wardIds);
+        }
+
+        if (surfaceIds != null && surfaceIds.size() >0) {
+            return this.surfaceRequestRepository.findAllBySurfaceIds(pageable, surfaceIds);
+        }
+
+        return  this.surfaceRequestRepository.findAll(pageable);
+
     }
 }
