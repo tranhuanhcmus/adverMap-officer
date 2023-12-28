@@ -103,6 +103,7 @@ create table reports (
                          id serial primary key,
                          surface_id int,
                          address varchar(255),
+                         user_ip varchar(255),
                          ward_id int,
                          long float,
                          lat float,
