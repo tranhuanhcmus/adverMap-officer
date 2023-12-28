@@ -84,10 +84,11 @@ public class SurfaceController {
             @RequestParam(required = false) Integer cityId,
             @RequestParam(required = false) List<Integer> wardIds,
             @RequestParam(required = false) List<Integer> districtIds,
+            @RequestParam(required = false) List<Integer> surfaceIds,
             @AuthenticationPrincipal UserInfoUserDetails userDetails
     )   {
         var user = userDetails.getUser();
-        var data = this.surfaceService.findAllRequest(page, size);
+        var data = this.surfaceService.findAllRequest(page, size,cityId, districtIds, wardIds, surfaceIds);
 
         var contents = new ArrayList<SurfaceRequestDto>();
         for (int i = 0; i < data.getContent().size(); i++){
