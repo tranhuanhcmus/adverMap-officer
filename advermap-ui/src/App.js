@@ -1,19 +1,39 @@
-import {BrowserRouter, createBrowserRouter, Outlet, redirect, Router, RouterProvider, Routes} from "react-router-dom";
+import {
+  BrowserRouter,
+  createBrowserRouter, Navigate,
+  Outlet,
+  redirect,
+  Router,
+  RouterProvider,
+  Routes,
+  useNavigate
+} from "react-router-dom";
 import HomePage from "./Pages/HomePage";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import SignIn from "./components/login/signin.tsx";
-import useToken from "./useToken";
 import {PAGE} from "./components/constants.tsx";
-import AppBar from "./components/appbar/appBar.tsx";
+import MiniDrawer from "./components/appbar/toolBar.tsx";
+import {useDispatch, useSelector} from "react-redux";
 
 function App() {
-  const { token, setToken } = useToken();
-
   const Layout = () => {
+    const {token} = useSelector(state => state.token);
+
+    const navigate = useNavigate();
+    // Check if the user is authenticated
+
+    useEffect(() => {
+      if (!token) {
+        // If not authenticated, redirect to the login page
+        navigate(PAGE.LOGIN, {replace: true})
+      }
+    }, []);
+
+
+
     return (
       <div className="h-screen w-screen bg-white">
-        <AppBar></AppBar>
-        <Outlet />
+        <MiniDrawer />
       </div>
     );
   };
@@ -22,7 +42,7 @@ function App() {
   const route = createBrowserRouter([
     {
       path: PAGE.LOGIN,
-      element: <SignIn  setToken={setToken}/>
+      element: <SignIn />
     },
     {
       path: "/",
@@ -34,7 +54,7 @@ function App() {
   ]);
 
   return (
-      <RouterProvider router={route} />
+        <RouterProvider router={route}/>
   )
 
 }

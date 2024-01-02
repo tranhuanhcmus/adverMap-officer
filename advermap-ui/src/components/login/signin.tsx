@@ -16,6 +16,10 @@ import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {AuthService} from "../../services/auth/authService.tsx";
 import {AxiosError} from "axios";
+import {PAGE} from "../constants.tsx";
+import {Alert} from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import {setToken} from "../../redux/useToken.tsx";
 
 function Copyright(props: any) {
     return (
@@ -43,8 +47,9 @@ const initialFields: AuthFieldForm = {
     password: '',
 };
 
-const SignIn = ({setToken} ) => {
-
+const SignIn = ( ) => {
+    const {token} = useSelector(state => state.token);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [fields, setFields] = useState(initialFields)
@@ -53,23 +58,21 @@ const SignIn = ({setToken} ) => {
         e.preventDefault(); // Prevent default form submission behavior
 
         try {
-            setMessage("Pending")
             const res = await AuthService.login(fields);
             if (res.status == 200) {
-                setMessage("Login success ")
-                console.log("Token:" + res.data)
-                setToken(res.data)
-                navigate("/Home", {replace: true})
+                dispatch(setToken(res.data));
+                navigate(PAGE.HOME, {replace: true})
             } else {
-                setMessage("Error" + res.message)
-
+                setMessage("Error: " + res.message)
             }
 
         } catch (error) {
             if (error instanceof AxiosError) {
-                console.log(error);
-
-                setMessage(error.code as string)
+                if (error.response.data.message) {
+                    setMessage("Error: " + error.response.data.message)
+                } else {
+                    setMessage(error.code as string)
+                }
             }
         }
         finally{
@@ -132,6 +135,17 @@ const SignIn = ({setToken} ) => {
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
                         />
+                        {message ? (
+                            <>
+                                <Alert variant="outlined" severity="error">
+                                    {message}
+                                </Alert>
+                            </>
+
+                        ) : (
+                            <h1>Enter usename and password</h1>
+                        )}
+
                         <Button
                             type="submit"
                             fullWidth
@@ -157,7 +171,7 @@ const SignIn = ({setToken} ) => {
                 <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
         </ThemeProvider>
-    );
+    )
 }
 
 export default SignIn;
