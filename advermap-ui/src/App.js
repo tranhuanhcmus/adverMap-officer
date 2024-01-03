@@ -8,7 +8,7 @@ import {
   Routes,
   useNavigate
 } from "react-router-dom";
-import HomePage from "./Pages/HomePage";
+import HomePage from "./pages/HomePage.jsx";
 import React, {useEffect, useState} from "react";
 import SignIn from "./components/login/signin.tsx";
 import {PAGE} from "./components/constants.tsx";
@@ -25,7 +25,7 @@ function App() {
     useEffect(() => {
       if (!token) {
         // If not authenticated, redirect to the login page
-        navigate(PAGE.LOGIN, {replace: true})
+        navigate(PAGE.LOGIN.path, {replace: true})
       }
     }, []);
 
@@ -41,14 +41,14 @@ function App() {
   //Setting Router
   const route = createBrowserRouter([
     {
-      path: PAGE.LOGIN,
+      path: PAGE.LOGIN.path,
       element: <SignIn />
     },
     {
       path: "/",
       element: <Layout />,
       children: [
-          { path: PAGE.HOME, element: <HomePage /> },
+          { path: PAGE.HOME.path, element: <HomePage /> },
       ],
     },
   ]);

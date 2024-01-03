@@ -4,6 +4,7 @@ package com.adsmanagement.users;
 import com.adsmanagement.common.Response;
 import com.adsmanagement.users.dto.CreateUserDTO;
 import com.adsmanagement.users.dto.UserDTO;
+import com.adsmanagement.users.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

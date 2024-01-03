@@ -6,25 +6,25 @@ import MailIcon from "@mui/icons-material/Mail";
 import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
 import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {setCurrentPage} from "../../redux/currentPage.tsx";
+import {PAGE, Page} from "../constants.tsx";
 
 export class BarItemProp {
-    text: string;
-    url: string;
+    page: Page;
     icon: string;
 }
 
 export default function BarItem({prop} : BarItemProp){
-    console.log(prop);
-    console.log(prop.url);
-
-
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const handleOnClick = () => {
-        navigate(prop.url);
+        dispatch(setCurrentPage(prop.page));
+        navigate(prop.page.path);
     };
 
     return (
-        <ListItem key={prop.text} disablePadding sx={{ display: 'block' }}>
+        <ListItem key={prop.page.path} disablePadding sx={{ display: 'block' }}>
             <ListItemButton
                 sx={{
                     minHeight: 48,
@@ -40,9 +40,11 @@ export default function BarItem({prop} : BarItemProp){
                         justifyContent: 'center',
                     }}
                 >
-                    <InboxIcon />
+                    <>
+                        {prop.icon}
+                    </>
                 </ListItemIcon>
-                <ListItemText primary={prop.text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={prop.page.name} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
         </ListItem>
     )

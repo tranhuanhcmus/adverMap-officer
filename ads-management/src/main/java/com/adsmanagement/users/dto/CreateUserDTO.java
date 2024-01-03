@@ -1,7 +1,6 @@
 package com.adsmanagement.users.dto;
 
-import com.adsmanagement.users.User;
-import jakarta.persistence.*;
+import com.adsmanagement.users.models.User;
 import lombok.*;
 
 import java.util.Date;

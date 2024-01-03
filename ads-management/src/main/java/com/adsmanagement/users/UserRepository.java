@@ -1,5 +1,6 @@
 package com.adsmanagement.users;
 
+import com.adsmanagement.users.models.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

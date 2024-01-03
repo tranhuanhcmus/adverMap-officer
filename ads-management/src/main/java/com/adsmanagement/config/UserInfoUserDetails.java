@@ -1,6 +1,6 @@
 package com.adsmanagement.config;
 
-import com.adsmanagement.users.User;
+import com.adsmanagement.users.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

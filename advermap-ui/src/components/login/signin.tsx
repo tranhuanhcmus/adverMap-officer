@@ -20,6 +20,7 @@ import {PAGE} from "../constants.tsx";
 import {Alert} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {setToken} from "../../redux/useToken.tsx";
+import {setCurrentPage} from "../../redux/currentPage.tsx";
 
 function Copyright(props: any) {
     return (
@@ -50,6 +51,7 @@ const initialFields: AuthFieldForm = {
 const SignIn = ( ) => {
     const {token} = useSelector(state => state.token);
     const dispatch = useDispatch();
+    const {currentPage} = useSelector(state => state.currentPage);
     const navigate = useNavigate();
 
     const [fields, setFields] = useState(initialFields)
@@ -61,7 +63,9 @@ const SignIn = ( ) => {
             const res = await AuthService.login(fields);
             if (res.status == 200) {
                 dispatch(setToken(res.data));
-                navigate(PAGE.HOME, {replace: true})
+                dispatch(setCurrentPage(PAGE.HOME));
+                navigate(PAGE.HOME.path, {replace:true});
+
             } else {
                 setMessage("Error: " + res.message)
             }

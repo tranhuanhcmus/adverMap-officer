@@ -8,7 +8,7 @@ import com.adsmanagement.surfaces.dto.CreateSurfaceDto;
 import com.adsmanagement.surfaces.dto.CreateSurfaceRequestDto;
 import com.adsmanagement.surfaces.models.Surface;
 import com.adsmanagement.surfaces.models.SurfaceRequest;
-import com.adsmanagement.users.User;
+import com.adsmanagement.users.models.User;
 import com.adsmanagement.wards.Ward;
 import com.adsmanagement.wards.WardRepository;
 import org.springframework.beans.factory.annotation.Autowired;

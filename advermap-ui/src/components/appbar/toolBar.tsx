@@ -4,20 +4,12 @@ import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import {Outlet} from "react-router-dom";
 import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -25,11 +17,12 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import BarItem, {BarItemProp} from "./barItem.tsx";
-import {PAGE} from "../constants.tsx";
+import {DEFAULT, PAGE} from "../constants.tsx";
 import BarList from "./barList.tsx";
+import ActiveLastBreadcrumb from "./breadcrumb.tsx";
+import NotificationBox from "./notification/notificationBox.tsx";
 
-const drawerWidth = 240;
+const drawerWidth = 360;
 
 const openedMixin = (theme: Theme): CSSObject => ({
     width: drawerWidth,
@@ -46,9 +39,9 @@ const closedMixin = (theme: Theme): CSSObject => ({
         duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: 'hidden',
-    width: `calc(${theme.spacing(7)} + 1px)`,
+    width: `calc(${theme.spacing(4)} + ${DEFAULT.ICON_SIZE}px)`,
     [theme.breakpoints.up('sm')]: {
-        width: `calc(${theme.spacing(8)} + 1px)`,
+        width: `calc(${theme.spacing(5)} + ${DEFAULT.ICON_SIZE}px)`,
     },
 });
 
@@ -176,24 +169,7 @@ export default function MiniDrawer() {
             onClose={handleMobileMenuClose}
         >
             <MenuItem>
-                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="error">
-                        <MailIcon />
-                    </Badge>
-                </IconButton>
-                <p>Messages</p>
-            </MenuItem>
-            <MenuItem>
-                <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                >
-                    <Badge badgeContent={17} color="error">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
+                <NotificationBox/>
             </MenuItem>
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
@@ -203,7 +179,7 @@ export default function MiniDrawer() {
                     aria-haspopup="true"
                     color="inherit"
                 >
-                    <AccountCircle />
+                    <AccountCircle sx={{fontSize:DEFAULT.ICON_SIZE}}/>
                 </IconButton>
                 <p>Profile</p>
             </MenuItem>
@@ -211,13 +187,11 @@ export default function MiniDrawer() {
     );
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex'}}>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
 
-
                 <Toolbar>
-
                     <IconButton
                         size="large"
                         edge="start"
@@ -226,7 +200,7 @@ export default function MiniDrawer() {
                         onClick={handleDrawerOpen}
                         sx={{ mr: 2 }}
                     >
-                        <MenuIcon />
+                        <MenuIcon sx={{fontSize:DEFAULT.ICON_SIZE}} />
                     </IconButton>
                     <Typography
                         variant="h6"
@@ -234,25 +208,12 @@ export default function MiniDrawer() {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
-                        MUI
+                        Quản lý hệ thống quảng cáo
                     </Typography>
 
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="error">
-                                <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={17} color="error">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
+                        <NotificationBox/>
                         <IconButton
                             size="large"
                             edge="end"
@@ -262,7 +223,7 @@ export default function MiniDrawer() {
                             onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
-                            <AccountCircle />
+                            <AccountCircle  sx={{fontSize:DEFAULT.ICON_SIZE}}/>
                         </IconButton>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -279,19 +240,20 @@ export default function MiniDrawer() {
                     </Box>
                 </Toolbar>
             </AppBar>
+
             {renderMobileMenu}
             {renderMenu}
-            <Drawer variant="permanent" open={open}>
-                <DrawerHeader>
+            <Drawer variant="permanent" open={open} >
+                <DrawerHeader >
                     <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                        {theme.direction === 'rtl' ? <ChevronRightIcon sx={{fontSize:DEFAULT.ICON_SIZE}} /> : <ChevronLeftIcon sx={{fontSize:DEFAULT.ICON_SIZE}}/>}
                     </IconButton>
                 </DrawerHeader>
-                <Divider />
                <BarList/>
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
+                <ActiveLastBreadcrumb/>
                 <Outlet />
             </Box>
         </Box>

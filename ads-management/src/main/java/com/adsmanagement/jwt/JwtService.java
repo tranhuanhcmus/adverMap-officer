@@ -1,6 +1,6 @@
 package com.adsmanagement.jwt;
 
-import com.adsmanagement.users.User;
+import com.adsmanagement.users.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

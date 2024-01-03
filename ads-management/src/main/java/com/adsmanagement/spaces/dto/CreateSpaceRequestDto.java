@@ -1,7 +1,7 @@
 package com.adsmanagement.spaces.dto;
 
 import com.adsmanagement.spaces.models.*;
-import com.adsmanagement.users.User;
+import com.adsmanagement.users.models.User;
 import com.adsmanagement.wards.Ward;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

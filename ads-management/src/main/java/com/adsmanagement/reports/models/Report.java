@@ -1,10 +1,9 @@
 package com.adsmanagement.reports.models;
 
 import com.adsmanagement.reports.dto.ReportDto;
-import com.adsmanagement.spaces.dto.SpaceDto;
 import com.adsmanagement.surfaces.dto.SurfaceDto;
 import com.adsmanagement.surfaces.models.Surface;
-import com.adsmanagement.users.User;
+import com.adsmanagement.users.models.User;
 import com.adsmanagement.users.dto.UserDTO;
 import com.adsmanagement.wards.Ward;
 import com.adsmanagement.wards.WardDTO;

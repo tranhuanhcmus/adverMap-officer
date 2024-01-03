@@ -1,6 +1,6 @@
 package com.adsmanagement.config;
 
-import com.adsmanagement.users.User;
+import com.adsmanagement.users.models.User;
 import com.adsmanagement.users.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -36,8 +36,10 @@ const tokenSlice = createSlice({
             return state.token;
         },
         setToken: (state, action) =>  {
-            state.token = action.payload;
-            localStorage.setItem('token', JSON.stringify(state.token));
+            const decodedToken = jwtDecode(action.payload); // decode your token here
+
+            state.token = decodedToken;
+            localStorage.setItem('token', JSON.stringify(action.payload));
         }
     }
 });

@@ -6,7 +6,7 @@ import com.adsmanagement.spaces.dto.CreateSpaceDto;
 import com.adsmanagement.spaces.dto.CreateSpaceRequestDto;
 import com.adsmanagement.spaces.models.Space;
 import com.adsmanagement.spaces.models.SpaceRequest;
-import com.adsmanagement.users.User;
+import com.adsmanagement.users.models.User;
 import com.adsmanagement.wards.Ward;
 import com.adsmanagement.wards.WardRepository;
 import org.springframework.beans.factory.annotation.Autowired;

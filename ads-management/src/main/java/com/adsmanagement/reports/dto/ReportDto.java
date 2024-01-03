@@ -2,12 +2,8 @@ package com.adsmanagement.reports.dto;
 
 import com.adsmanagement.reports.models.ReportState;
 import com.adsmanagement.surfaces.dto.SurfaceDto;
-import com.adsmanagement.surfaces.models.Surface;
-import com.adsmanagement.users.User;
 import com.adsmanagement.users.dto.UserDTO;
-import com.adsmanagement.wards.Ward;
 import com.adsmanagement.wards.WardDTO;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;

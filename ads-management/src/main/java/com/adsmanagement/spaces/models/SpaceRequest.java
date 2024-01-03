@@ -2,7 +2,7 @@ package com.adsmanagement.spaces.models;
 
 import com.adsmanagement.spaces.dto.SpaceDto;
 import com.adsmanagement.spaces.dto.SpaceRequestDto;
-import com.adsmanagement.users.User;
+import com.adsmanagement.users.models.User;
 import com.adsmanagement.users.dto.UserDTO;
 import com.adsmanagement.wards.Ward;
 import com.adsmanagement.wards.WardDTO;
